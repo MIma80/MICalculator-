@@ -1,0 +1,4 @@
+﻿[*.{cs,vb}]
+
+# IDE0049: Упрощение имен
+dotnet_diagnostic.IDE0049.severity = suggestion
