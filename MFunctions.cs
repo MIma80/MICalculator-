@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -14,10 +13,10 @@ namespace MICalculator
         protected static string binary_operations = "+/*^";
         protected static string unary_operations = "!f";
 
-        protected const int height = 18;
-        protected const int width = 90;
+        protected const int height = 25;
+        protected const int width = 60;
 
-
+        #region Import&&Consts
         protected const int SC_MINIMIZE = 0xF020;
         protected const int SC_MAXIMIZE = 0xF030;
         protected const int SC_SIZE = 0xF000;
@@ -29,10 +28,11 @@ namespace MICalculator
         private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
 
         [DllImport("kernel32.dll", ExactSpelling = true)]
+        #endregion
         private static extern IntPtr GetConsoleWindow();
         protected static void Clamp()
         {
-            if (symbol_count > 50)
+            if (symbol_count > width - 5)
             {
                 Delete(1, 0);
             }
@@ -45,11 +45,14 @@ namespace MICalculator
             input = string.Empty;
             symbol_count = 0;
         }
-        protected static void FixConsole()
+        protected static void SetFixedConsole()
         {
             DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MINIMIZE, 0);
             DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MAXIMIZE, 0);
             DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_SIZE, 0);
+
+            Console.SetWindowSize(width, height);
+            Console.SetBufferSize(width, height);
         }
         protected static string ReadKeys()
         {
@@ -67,11 +70,6 @@ namespace MICalculator
                     case ConsoleKey.D1:
                         {
                             return "!";
-                        }
-
-                    case ConsoleKey.D5:
-                        {
-                            return "%";
                         }
 
                     case ConsoleKey.D6:
@@ -277,7 +275,7 @@ namespace MICalculator
         }
         protected static void SetCursor(int position)
         {
-            Console.SetCursorPosition(20 + position, (height / 10 * 2) + 1);
+            Console.SetCursorPosition(3 + position, 2);
         }
         protected static void CheckMove()
         {
@@ -315,12 +313,12 @@ namespace MICalculator
         {
             if (result != string.Empty)
             {
-                if (Calculate.Brackets(input).Length + input.Length + 3 < 50)
+                if (Calculate.Brackets(input).Length + input.Length + 3 < width - 1)
                     SetCursor(input.Length);
-                else Console.SetCursorPosition((width / 5 * 4) - result.Length - 4, height / 10 * 2 + 2);
+                else Console.SetCursorPosition(width - 1 - result.Length - 4, 3);
 
                 Console.ForegroundColor = ConsoleColor.Blue; 
-                Console.Write("  =  ");
+                Console.Write("  = ");
                 Console.Write(result);
                 Console.ForegroundColor = ConsoleColor.Green;
             }

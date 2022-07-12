@@ -22,7 +22,7 @@ namespace MICalculator
                 int close_bracket_index = input.LastIndexOf('(') + temp.Length + 1;
                 int bracket_symbol_count = close_bracket_index - open_bracket_index + 1;
 
-                if (input[0] != '(')
+                if (open_bracket_index != 0)
                 {
                     if (char.IsDigit(input[open_bracket_index - 1]))
                     {
@@ -31,7 +31,7 @@ namespace MICalculator
                         close_bracket_index++;
                     }
                 }
-                if (input[input.Length - 1] != ')')
+                if (input.Length - 1 != close_bracket_index)
                 {
                     if (char.IsDigit(input[close_bracket_index + 1]))
                     {
@@ -45,9 +45,10 @@ namespace MICalculator
             catch (Exception ex)
             {
                 //Console.WriteLine(ex);
+                string message = "Caution: Invalid input";
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.SetCursorPosition(20 + 10, height / 10 * 2 + 2);
-                Console.Write("Caution: Close all brackets");
+                Console.SetCursorPosition(width / 2 - message.Length / 2, 3);
+                Console.Write(message);
                 Console.ForegroundColor = ConsoleColor.Green;
                 return string.Empty;
             }
@@ -68,8 +69,6 @@ namespace MICalculator
                     input = input.Remove(i + 1, 1);
                 }
             }
-
-            //arr = input.Insert(0, input[1] == '-' ? "0" : "").Split(binary_operations.ToCharArray()).Select(Double.Parse).ToArray();
 
             string temp = binary_operations.Contains(input[0]) ? input.Remove(0, 1) : input;
             symbols = new String(temp.Where(x => (binary_operations.Contains(x) || unary_operations.Contains(x))).ToArray());
@@ -92,8 +91,9 @@ namespace MICalculator
             if (arr.Contains(double.MaxValue))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.SetCursorPosition(20 + 10, height / 10 * 2 + 2);
-                Console.Write("Error: Value is too big");
+                string message = "Error: Value is too big";
+                Console.SetCursorPosition(width / 2 - message.Length / 2, 3);
+                Console.Write(message);
                 Console.ForegroundColor = ConsoleColor.Green;
                 return string.Empty;
             }
@@ -114,8 +114,8 @@ namespace MICalculator
         }
         private static void Binary_Operation_Simplification(char symbol, MIMath.simple_operation simple_op)
         {
-            // arr {1, 2, 3, 6}  =>  {1, 6, 6} => {1,1} => {2}
-            // symbols {+, *, /} =>  {+, /} => {+}  =>  {}
+            // arr {1, 2, 3, 6}  =>  {1, 2, 0.5} => {1,1} => {2}
+            // symbols {+, *, /} =>  {+, *} => {+}  =>  {}
             while (symbols.IndexOf(symbol) != -1)
             {
                 double locres = simple_op(arr[symbols.IndexOf(symbol)], arr[symbols.IndexOf(symbol) + 1]);

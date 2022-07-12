@@ -34,8 +34,8 @@ namespace MICalculator
         }
         public static long Factorial(int number)
         {
-            long result = 2;
-            for (int i = 3; i <= number; i++)
+            long result = 1;
+            for (int i = 2; i <= number; i++)
             {
                 result *= i;
             }
