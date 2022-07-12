@@ -313,7 +313,7 @@ namespace MICalculator
         {
             if (result != string.Empty)
             {
-                if (Calculate.Brackets(input).Length + input.Length + 3 < width - 1)
+                if (Calculate.Brackets(input).Length + input.Length + 3 < width - 3)
                     SetCursor(input.Length);
                 else Console.SetCursorPosition(width - 1 - result.Length - 4, 3);
 
