@@ -51,6 +51,7 @@ namespace MICalculator
             DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_MAXIMIZE, 0);
             DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_SIZE, 0);
 
+            Console.Title = "Calculator";
             Console.SetWindowSize(width, height);
             Console.SetBufferSize(width, height);
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace MICalculator
 {
@@ -24,7 +23,10 @@ namespace MICalculator
             }
             catch (DivideByZeroException e)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.SetCursorPosition(Console.WindowWidth / 2 - e.Message.Length / 2, 3);
                 Console.WriteLine(e.Message);
+                Console.ForegroundColor= ConsoleColor.Green;
                 return -1;
             }
         }
