@@ -1,2 +1,2 @@
 # MICalculator-
-![alt text](https://github.com/MIma80/MICalculator/blob/main/demo.gif "demo")
+![alt text](https://github.com/MIma80/MICalculator/blob/main/preview.gif "preview")
