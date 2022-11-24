@@ -32,6 +32,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsWindows)'=='true'">
+    <DefineConstants>Windows</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,11 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculate.cs" />
-    <Compile Include="MFunctions.cs" />
-    <Compile Include="Menu.cs" />
-    <Compile Include="MIMath.cs" />
-    <Compile Include="MainCS.cs" />
+    <Compile Include="App\Logger.cs" />
+    <Compile Include="Handlers\CalculationHandler\CalculationHandler.cs" />
+    <Compile Include="Handlers\InputHandler.cs" />
+    <Compile Include="App\App.cs" />
+    <Compile Include="Handlers\CalculationHandler\MathFunctions.cs" />
+    <Compile Include="App\MainCS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
